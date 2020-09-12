@@ -1,0 +1,31 @@
+module top;
+  class A;
+    rand logic[2:0] dyna_arr[];
+    rand int asso_arr[*];
+    rand int q[$];
+    rand int val;
+    
+    function void pre_randomize();
+      for (int i=0; i<10; i++) begin asso_arr[i] = val; q[i] = val; end
+    endfunction
+    
+    function void post_randomize;
+      $display("dyna_arr = %0p", dyna_arr);
+      $display("asso_arr = %0p", asso_arr);
+      $display("queue = %p", q);
+    endfunction
+    
+    constraint cons_asso_arr{foreach(asso_arr[ii]) asso_arr[ii] <10; foreach(asso_arr[ii]) asso_arr[ii] >=0; }
+    constraint cons_q_arr{foreach(q[ii]) q[ii] <10; foreach(q[ii]) q[ii] >=0; }
+  endclass
+  
+  A obj_A;
+  
+  initial begin
+    obj_A = new();
+    repeat(9) begin
+      obj_A.dyna_arr = new[10];
+      void'(obj_A.randomize());
+    end
+  end
+endmodule

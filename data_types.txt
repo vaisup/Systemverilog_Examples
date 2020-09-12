@@ -1,0 +1,35 @@
+module top;
+  class A;
+  rand shortint a;
+  rand int b;
+  rand longint c;
+  rand byte d;
+  rand bit[7:0] e;
+  rand logic[7:0] f;
+  rand reg[7:0] g;
+  rand integer h;
+  rand time i;
+  
+    function void disp();      
+      i = $time;
+      $display("\n\nshortint = %0d\n int = %0d\n logint = %0d\n byte = %0d\n bit = %0b\n logic = %0b\n reg = %0b\n integer = %0d\n time = %0t\n\n", a,b,c,d,e,f,g,h,i);
+      
+      $display("\n\nshortint = 'h %0h\n int = 'h %0h\n logint = 'h %0h\n byte = 'h %0h\n bit = 'b %0b\n logic = 'b %0b\n reg = 'b %0b\n integer = %0d\n time = %0t\n\n", a,b,c,d,e,f,g,h,i);
+    endfunction
+  endclass
+  
+  A obj_A;
+  initial begin
+  obj_A = new;
+    #10;
+    
+    obj_A.disp();
+    
+    repeat(5) begin
+      #10;
+      void'(obj_A.randomize());
+      obj_A.disp();
+    end
+  end
+
+endmodule
